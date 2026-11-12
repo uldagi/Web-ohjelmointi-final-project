@@ -50,7 +50,7 @@ export default function SearchPage({ playlists, onAdd }) {
 
 
       <div className="mt-3">
-        <label htmlFor="playlist-select" className="form-label">Lisää soittolistaan</label>
+        <label htmlFor="target-playlist" className="form-label">Lisää soittolistaan</label>
         <select
           id="target-playlist"
           className="form-select"
@@ -93,7 +93,7 @@ export default function SearchPage({ playlists, onAdd }) {
                     type="button"
                     className="btn btn-sm btn-outline-primary ms-2"
                     disabled={!selectedPlaylist || alreadyAdded}
-                    onClick={() => onAdd(selectedId, track)}
+                    onClick={() => onAdd(selectedID, track)}
                   >
                     {alreadyAdded ? 'Listalla' : 'Lisää'}
                   </button>

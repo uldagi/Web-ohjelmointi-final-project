@@ -1,12 +1,35 @@
-import { useState } from 'react'
+
+import { useEffect, useState } from 'react'
 import { Link, Route, Routes } from 'react-router'
 import SearchPage from './sivut/SearchPage.jsx'
 import PlaylistsPage from './sivut/PlaylistsPage.jsx'
 import PlaylistPage from './sivut/PlaylistPage.jsx'
 
+const storageKey = 'soittolistat.v1'
+
+function readPlaylistss() {
+  try {
+    const saved = localStorage.getItem(storageKey)
+    if (saved === null) return []
+
+    const playlists = JSON.parse(saved) // Muunna JSON-teksti takaisin olioiksi
+    return Array.isArray(playlists) ? playlists : []
+  } catch {
+    return []
+  }
+}
+
 export default function App() {
-  // Tila on Appissa, jotta samat listat näkyvät kaikilla kolmella sivulla.
-  const [playlists, setPlaylists] = useState([])
+  const [playlists, setPlaylists] = useState(readPlaylistss) //Lue listat käynnistyksen yhteydessä
+
+  useEffect(() => {
+    try {
+      // Tallenna listat selaimeen aina, kun playlists-tila muuttuu.
+      localStorage.setItem(storageKey, JSON.stringify(playlists))
+    } catch (error) {
+      console.warn('Soittolistojen tallennus epäonnistui.', error)
+    }
+  }, [playlists])
 
   function createPlaylist(name) {
     const playlist = { id: crypto.randomUUID(), name, tracks: [] }
@@ -14,7 +37,7 @@ export default function App() {
   }
 
   function updatePlaylist(playlistId, update) {
-    // Käy listat läpi ja päivitä tunnisteella valittu lista.
+    // Käy listat läpi ja päivitä ID:llä valittu lista.
     setPlaylists((current) =>
       current.map((playlist) =>
         playlist.id === playlistId ? update(playlist) : playlist,
@@ -28,7 +51,7 @@ export default function App() {
 
   function addTrack(playlistId, track) {
     updatePlaylist(playlistId, (playlist) => {
-      // Tunnisteen avulla estetään saman kappaleen lisääminen kahdesti.
+      // ID:n avulla estetään saman kappaleen lisääminen kahdesti.
       const alreadyAdded = playlist.tracks.some((item) => item.id === track.id)
       if (alreadyAdded) return playlist
 
