@@ -1,0 +1,7 @@
+body {
+  background-color: #d9dde0; /* Vaalea tausta erottaa sisällön valkoisesta yläpalkista. */
+}
+
+.app-width {
+  max-width: 880px; /* Yläpalkin ja sivusisällön reunat ovat samalla linjalla. */
+}

@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react'
-import { Link, Route, Routes } from 'react-router'
+import { NavLink, Route, Routes } from 'react-router'
 import SearchPage from './sivut/SearchPage.jsx'
 import PlaylistsPage from './sivut/PlaylistsPage.jsx'
 import PlaylistPage from './sivut/PlaylistPage.jsx'
@@ -67,32 +67,47 @@ export default function App() {
   }
 
   return (
-    <main className="container py-4">
-      <nav className="d-flex gap-3 mb-4">
-        <Link to="/">Kappalehaku</Link>
-        <Link to="/soittolistat">Omat soittolistat</Link>
-      </nav>
+    <>
+      <header className="bg-white border-bottom">
+        <div className="container app-width d-flex flex-wrap align-items-center gap-3 py-3">
+          <span className="fw-bold fs-5 me-auto">Soittolistat</span>
 
-      <Routes>
-        <Route
-          path="/"
-          element={<SearchPage playlists={playlists} onAdd={addTrack} />}
-        />
-        <Route
-          path="/soittolistat"
-          element={<PlaylistsPage playlists={playlists} onCreate={createPlaylist} />}
-        />
-        <Route
-          path="/soittolistat/:id"
-          element={
-            <PlaylistPage
-              playlists={playlists}
-              onRename={renamePlaylist}
-              onRemove={removeTrack}
-            />
-          }
-        />
-      </Routes>
-    </main>
+          <nav className="nav nav-pills gap-1" aria-label="Päävalikko">
+            {/* end rajaa linkin korostuksen etusivulle. */}
+            <NavLink to="/" end className="nav-link">
+              Kappalehaku
+            </NavLink>
+
+            <NavLink to="/soittolistat" className="nav-link">
+              Omat soittolistat
+            </NavLink>
+          </nav>
+        </div>
+      </header>
+
+      <main className="container app-width py-4 py-md-5">
+        {/* Routes valitsee osoitetta vastaavan sivun. */}
+        <Routes>
+          <Route
+            path="/"
+            element={<SearchPage playlists={playlists} onAdd={addTrack} />}
+          />
+          <Route
+            path="/soittolistat"
+            element={<PlaylistsPage playlists={playlists} onCreate={createPlaylist} />}
+          />
+          <Route
+            path="/soittolistat/:id"
+            element={
+              <PlaylistPage
+                playlists={playlists}
+                onRename={renamePlaylist}
+                onRemove={removeTrack}
+              />
+            }
+          />
+        </Routes>
+      </main>
+    </>
   )
 }
