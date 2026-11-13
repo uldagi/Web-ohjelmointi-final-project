@@ -5,3 +5,27 @@ body {
 .app-width {
   max-width: 880px; /* Yläpalkin ja sivusisällön reunat ovat samalla linjalla. */
 }
+
+body {
+  background-color: #f3f6fa; /* Vaalea tausta erottaa valkoisen yläpalkin. */
+  color: #172b4d; /* Tumma teksti erottuu vaaleasta taustasta. */
+}
+
+.app-width {
+  max-width: 880px; /* Yläpalkin ja sisällön reunat ovat samalla linjalla. */
+}
+
+main h1 {
+  margin-bottom: 1.25rem; /* Jätä otsikon ja lomakkeen väliin tilaa. */
+  font-weight: 700;
+}
+
+header .nav-link.active {
+  background-color: #244a76; /* Korosta valittu näkymä tummansinisellä. */
+  color: #fff;
+}
+
+main li,
+main h1 {
+  overflow-wrap: anywhere; /* Pitkät nimet mahtuvat myös kapealle ruudulle. */
+}
