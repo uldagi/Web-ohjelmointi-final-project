@@ -86,7 +86,7 @@ export default function SearchPage({ playlists, onAdd }) {
                 (item) => item.id === track.id,
               )
 
-              return (
+              return (                                             //  palauttaa kappaleen tiedot listalle, jos sitä ei ole jo lisätty valittuun soittolistaan. 
                 <li key={track.id} className="mb-2">
                   {track.title} – {track.artist}
                   <button

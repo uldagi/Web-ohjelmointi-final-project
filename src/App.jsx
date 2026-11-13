@@ -9,11 +9,11 @@ const storageKey = 'soittolistat.v1'
 
 function readPlaylistss() {
   try {
-    const saved = localStorage.getItem(storageKey)
+    const saved = localStorage.getItem(storageKey)            // Hakee tallennetut soittolistat selaimen muistista. Jos niitä ei ole, palautetaan tyhjä lista.
     if (saved === null) return []
 
     const playlists = JSON.parse(saved) // Muunna JSON-teksti takaisin olioiksi
-    return Array.isArray(playlists) ? playlists : []
+    return Array.isArray(playlists) ? playlists : []        // Soittolistan pitää olla taulukko
   } catch {
     return []
   }
@@ -31,7 +31,7 @@ export default function App() {
     }
   }, [playlists])
 
-  function createPlaylist(name) {
+  function createPlaylist(name) {                      // Annetaaan uudelle listalle id, nimi ja tyhjä kappalelista
     const playlist = { id: crypto.randomUUID(), name, tracks: [] }
     setPlaylists((current) => [...current, playlist])
   }
@@ -62,8 +62,8 @@ export default function App() {
   function removeTrack(playlistId, trackId) {
     updatePlaylist(playlistId, (playlist) => ({
       ...playlist,
-      tracks: playlist.tracks.filter((track) => track.id !== trackId),
-    }))
+      tracks: playlist.tracks.filter((track) => track.id !== trackId),             
+    }))        // Filter kerää uuteen taulukkoon kappaleet, joiden tunniste eroaa poistettavasta kappaleesta. Näin saadaan poistettua haluttu kappale listalta. //
   }
 
   return (

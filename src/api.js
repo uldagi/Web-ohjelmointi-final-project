@@ -1,5 +1,5 @@
 export async function searchTracks(query) {
-  // URLSearchParams muuntaa välilyönnit ja erikoismerkit URLiin sopiviksi.
+  // URLSearchParams muuntaa välilyönnit ja erikoismerkit URLiin sopiviksi
   const params = new URLSearchParams({
     term: query,
     country: 'FI',
@@ -11,12 +11,12 @@ export async function searchTracks(query) {
   const response = await fetch(`https://itunes.apple.com/search?${params}`, {
     signal: AbortSignal.timeout(15000),
   })
-  if (!response.ok) {
+  if (!response.ok) {                                // Jos vastaus ei onnistunut, heitetään virhe
     throw new Error(`Kappalehaku epäonnistui (${response.status}).`)
   }
 
   const data = await response.json()
-  // Sovellus käyttää API-vastauksesta vain kappaleen tunnistetta, nimeä ja artistia.
+  // Sovellus käyttää API-vastauksesta vain kappaleen tunnistetta, nimeä ja artistia
   return data.results.map((track) => ({
     id: track.trackId,
     title: track.trackName,
